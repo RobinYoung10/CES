@@ -7,7 +7,10 @@ RUN useradd -m appuser && mkdir -p /app/logs /app/data
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip setuptools \
+    && pip install --no-cache-dir -r requirements.txt \
+    && rm -rf /usr/local/lib/python3.12/ensurepip
+# ^ removes the bundled (unused) pip/setuptools wheels that carry stale CVEs
 
 COPY templates /app/templates
 COPY flask_app.py /app/app.py
