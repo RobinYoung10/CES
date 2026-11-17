@@ -6,7 +6,7 @@ services:
     environment:
       - FILE_ENCRYPTION_KEY=${FILE_ENCRYPTION_KEY}
     volumes:
-      - ./logs:/app/logs
+      - flask_logs:/app/logs
     security_opt:
       - "no-new-privileges:true"
     expose:
@@ -23,3 +23,6 @@ services:
       - "no-new-privileges:true"
     depends_on:
       - flask
+
+volumes:
+  flask_logs:
