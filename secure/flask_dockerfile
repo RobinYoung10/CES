@@ -1,5 +1,8 @@
 FROM python:3.12-slim
 
+# Patch OS packages to reduce inherited CVEs (supply-chain hardening)
+RUN apt-get update && apt-get -y upgrade && rm -rf /var/lib/apt/lists/*
+
 RUN useradd -m appuser && mkdir -p /app/logs /app/data
 WORKDIR /app
 
