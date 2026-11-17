@@ -1,0 +1,25 @@
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: flask_dockerfile
+    environment:
+      - FILE_ENCRYPTION_KEY=${FILE_ENCRYPTION_KEY}
+    volumes:
+      - ./logs:/app/logs
+    security_opt:
+      - "no-new-privileges:true"
+    expose:
+      - "5000"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx_dockerfile
+    ports:
+      - "443:443"
+      - "80:80"
+    security_opt:
+      - "no-new-privileges:true"
+    depends_on:
+      - flask
